@@ -1,4 +1,4 @@
-# MailSense – Smart Email Engine
+# MailSense: Smart Email Engine
 
 **An AI-powered Gmail assistant for intelligent email management, classification, summarization, and inbox interaction.**
 
