@@ -72,19 +72,20 @@ Additional retrieval capabilities include:
 
 ## Technology Stack
 
-| Component            | Technologies                                        |
-| -------------------- | --------------------------------------------------- |
-| Frontend             | React.js, JavaScript, CSS, Vite                     |
-| Backend              | Python, FastAPI                                     |
-| Database             | PostgreSQL, SQLAlchemy                              |
-| Vector Database      | ChromaDB                                            |
-| Machine Learning     | DistilBERT                                          |
-| Text Embeddings      | Sentence Transformers                               |
-| AI / LLM             | Groq API                                            |
-| Retrieval System     | Retrieval-Augmented Generation (RAG), Hybrid Search |
-| Authentication       | Google OAuth 2.0, JWT                               |
-| Email Integration    | Gmail API                                           |
-| Calendar Integration | Google Calendar API                                 |
+| Component                      | Technologies                                        |
+| ------------------------------ | --------------------------------------------------- |
+| Frontend                       | React.js, JavaScript, CSS, Vite                     |
+| Frontend Development Tool      | Google Antigravity                                  |
+| Backend                        | Python, FastAPI                                     |
+| Database & ORM                 | PostgreSQL, SQLAlchemy                              |
+| Vector Database                | ChromaDB                                            |
+| Machine Learning               | DistilBERT                                          |
+| Text Embeddings                | Sentence Transformers (`all-MiniLM-L6-v2`)          |
+| AI / LLM Integration           | Groq API                                            |
+| Retrieval System               | Retrieval-Augmented Generation (RAG), Hybrid Search |
+| Authentication & Authorization | Google OAuth 2.0, JWT                               |
+| Email Integration              | Gmail API                                           |
+| Calendar Integration           | Google Calendar API                                 |
 
 ## System Workflow
 
