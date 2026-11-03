@@ -216,12 +216,5 @@ Open the local address displayed in the terminal.
 * Sensitive credentials are maintained through environment variables.
 * Gmail access is authorized through Google's consent flow.
 
-## Academic Information
-
-**Project:** MailSense – Smart Email Engine
-**Project Type:** Final Year Project (FYP)
-**Degree:** Bachelor of Science in Computer Science
-**Institution:** Government College University, Lahore
-
 ---
 
