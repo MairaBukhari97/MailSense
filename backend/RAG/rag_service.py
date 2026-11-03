@@ -431,12 +431,20 @@ class InboxOnlyRAG:
         )
 
         print("Storing in ChromaDB...")
-        collection.add(
-            embeddings=embeddings.tolist(),
-            documents=all_documents,
-            metadatas=all_metadatas,
-            ids=all_ids
-        )
+
+        chroma_batch_size = 4000
+
+        for i in range(0, len(all_documents), chroma_batch_size):
+            end = i + chroma_batch_size
+
+            collection.add(
+                embeddings=embeddings[i:end].tolist(),
+                documents=all_documents[i:end],
+                metadatas=all_metadatas[i:end],
+                ids=all_ids[i:end]
+            )
+
+            print(f"Stored {min(end, len(all_documents))}/{len(all_documents)} chunks")
 
         elapsed = time.time() - start_time
         print(f"Indexed {len(new_emails)} INBOX emails in {elapsed:.1f}s\n")
@@ -699,7 +707,7 @@ class InboxOnlyRAG:
         
         try:
             response = self.groq_client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="openai/gpt-oss-120b",
                 messages=[
                     {
                         "role": "system",
@@ -845,7 +853,7 @@ class InboxOnlyRAG:
             messages.append({"role": "user", "content": user_prompt})
 
             response = self.groq_client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="openai/gpt-oss-120b",
                 messages=messages,
                 temperature=0.05,
                 max_tokens=self.max_response_tokens

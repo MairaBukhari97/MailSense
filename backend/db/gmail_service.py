@@ -45,7 +45,36 @@ def get_gmail_service(db, user_id: int):
 
 def extract_body(payload):
     """Extract email body from Gmail payload."""
-    import html2text
+    from html.parser import HTMLParser
+
+    class _HTMLToText(HTMLParser):
+        BLOCK_TAGS = {
+            "address", "article", "blockquote", "br", "dd", "div", "dl",
+            "dt", "fieldset", "figcaption", "figure", "footer", "form",
+            "h1", "h2", "h3", "h4", "h5", "h6", "header", "hr", "li",
+            "main", "nav", "ol", "p", "pre", "section", "table", "tr", "ul",
+        }
+
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.text = []
+            self.hidden = 0
+
+        def handle_starttag(self, tag, attrs):
+            if tag in ("script", "style"):
+                self.hidden += 1
+            elif not self.hidden and tag in self.BLOCK_TAGS:
+                self.text.append("\n")
+
+        def handle_endtag(self, tag):
+            if tag in ("script", "style") and self.hidden:
+                self.hidden -= 1
+            elif not self.hidden and tag in self.BLOCK_TAGS:
+                self.text.append("\n")
+
+        def handle_data(self, data):
+            if not self.hidden:
+                self.text.append(data)
     
     def decode_data(data):
         return base64.urlsafe_b64decode(data).decode("utf-8", errors="ignore")
@@ -71,11 +100,10 @@ def extract_body(payload):
         if plain:
             return plain
         if html:
-            # Convert HTML to plain text
-            h = html2text.HTML2Text()
-            h.ignore_links = True
-            h.ignore_images = True
-            return h.handle(html)
+            # Convert HTML to plain text without an external dependency.
+            parser = _HTMLToText()
+            parser.feed(html)
+            return " ".join("".join(parser.text).split())
         return ""
 
     # Try direct body first

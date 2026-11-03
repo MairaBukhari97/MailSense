@@ -41,7 +41,8 @@ def create_or_update_user(db: Session, google_user_id: str, email: str, access_t
     if user:
         user.email = email
         user.access_token = access_token
-        user.refresh_token = refresh_token
+        if refresh_token:
+            user.refresh_token = refresh_token
     else:
         user = User(
             google_user_id=google_user_id,
